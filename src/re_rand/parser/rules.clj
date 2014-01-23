@@ -12,7 +12,9 @@
 ;; functions.
 
 (ns re-rand.parser.rules
+  (:refer-clojure :exclude [rand-int])
   (:require [clojure.set :refer [difference]]
+            [four.stateful :refer [rand-int]]
             [re-rand.parser.tools :refer :all]))
 
 (defn rnd-choice
