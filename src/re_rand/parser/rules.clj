@@ -17,13 +17,9 @@
             [four.stateful :refer [rand-int rand-nth]]
             [re-rand.parser.tools :refer :all]))
 
-(defn take-fn
-  [n f]
-  (take n (repeatedly f)))
-
 (defn rnd-seq
   [f min max]
-  (take-fn (+ (rand-int (- (inc max) min)) min) f))
+  (repeatedly (+ (rand-int (- (inc max) min)) min) f))
 
 (defn parse-int
   [n]
@@ -176,7 +172,7 @@
   (attach
     (series single (match #"\{(\d+)\}"))
     (fn [[f [_ n]]]
-      #(combine-many (take-fn (parse-int n) f)))))
+      #(combine-many (repeatedly (parse-int n) f)))))
 
 (def between-n-and-m
   (attach
