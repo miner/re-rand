@@ -12,8 +12,8 @@
 ;; functions.
 
 (ns re-rand.parser.rules
-  (:use re-rand.parser.tools)
-  (:use [clojure.set :only (difference)]))
+  (:require [clojure.set :refer [difference]]
+            [re-rand.parser.tools :refer :all]))
 
 (defn rnd-choice
   [coll]

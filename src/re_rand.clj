@@ -11,7 +11,7 @@
 ;; Generate random strings that match the supplied regular expression.
 
 (ns re-rand
-  (:use re-rand.parser.rules))
+  (:require [re-rand.parser.rules :refer :all]))
 
 (defn re-rand
   "Returns a random string that matches the regular expression."
