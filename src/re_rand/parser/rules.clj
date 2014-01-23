@@ -12,15 +12,10 @@
 ;; functions.
 
 (ns re-rand.parser.rules
-  (:refer-clojure :exclude [rand-int])
+  (:refer-clojure :exclude [rand-int rand-nth])
   (:require [clojure.set :refer [difference]]
-            [four.stateful :refer [rand-int]]
+            [four.stateful :refer [rand-int rand-nth]]
             [re-rand.parser.tools :refer :all]))
-
-(defn rnd-choice
-  [coll]
-  (let [v (vec coll)]
-    (v (rand-int (count v)))))
 
 (defn take-fn
   [n f]
@@ -91,12 +86,12 @@
     (match #"\\(.)")
     (fn [[_ char]]
       (cond
-        (= char "d") #(rnd-choice digits)
-        (= char "s") #(rnd-choice whitespace)
-        (= char "w") #(rnd-choice alphanumeric)
-        (= char "D") #(rnd-choice (invert digits))
-        (= char "S") #(rnd-choice (invert whitespace))
-        (= char "W") #(rnd-choice (invert alphanumeric))
+        (= char "d") #(rand-nth digits)
+        (= char "s") #(rand-nth whitespace)
+        (= char "w") #(rand-nth alphanumeric)
+        (= char "D") #(rand-nth (invert digits))
+        (= char "S") #(rand-nth (invert whitespace))
+        (= char "W") #(rand-nth (invert alphanumeric))
         :otherwise    (constantly char)))))
 
 (def literal
@@ -107,7 +102,7 @@
 (def any-char
   (attach
     (match #"\.")
-    (fn [_] #(rnd-choice valid-any-chars))))
+    (fn [_] #(rand-nth valid-any-chars))))
 
 (defn sequence-of-chars
   [src]
@@ -137,7 +132,7 @@
       (match #"\]"))
     (fn [[_ invert? char-groups _]]
       (let [chars (get-char-list char-groups (seq invert?))]
-        #(rnd-choice chars)))))
+        #(rand-nth chars)))))
 
 (declare pattern)
 
