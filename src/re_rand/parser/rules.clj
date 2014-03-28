@@ -46,7 +46,7 @@
 (def valid-any-chars
   (concat
     alphanumeric
-    "_-/+*=%()[]{}!?:;,. \t\n"))
+    "_-/+*=%()[]{}!?:;,. \t"))
 
 (defn invert
   "Return a set of characters that do not contain any of chars."
@@ -104,7 +104,7 @@
   [src]
   (let [f (match #"((\\.|[^\^\-\[\]\\])+)([^-]|$)")]
     (if-let [[[_ m _ s] src] (f src)]
-      [(.replace m "\\" "")
+      [(.replace ^String m "\\" "")
        (str s src)])))
 
 (def range-of-chars

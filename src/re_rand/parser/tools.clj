@@ -19,7 +19,7 @@
     (let [m (re-matcher re src)]
       (if (.lookingAt m)
         [(re-groups m)
-         (.substring src (.end m))]))))
+         (.substring ^String src (.end m))]))))
 
 (defn observe
   "Creates a rule, but doesn't reduce the source if it matches."
